@@ -1,26 +1,27 @@
 #[derive(Debug)]
 pub struct Params {
-    param: NMFParams,
+    pub(crate) param: NMFParams,
 }
 
 #[derive(Default, Debug)]
 pub struct NMFParams {
-    n_components: u64,
-    batch_size: u64,
-    kappa: f64,
-    minimum_probability: f64,
-    w_max_iter: u64,
-    w_stop_condtions: f64,
-    h_max_iter: u64,
-    h_stop_condtions: f64,
-    eval_every: u64,
-    normalize: bool,
-    random_state: Option<i32>,
+    pub(crate) n_components: usize,
+    pub(crate) batch_size: u64,
+    pub(crate) epochs: u64,
+    pub(crate) kappa: f64,
+    pub(crate) minimum_probability: f64,
+    pub(crate) w_max_iter: u64,
+    pub(crate) w_stop_condtions: f64,
+    pub(crate) h_max_iter: u64,
+    pub(crate) h_stop_condtions: f64,
+    pub(crate) eval_every: u64,
+    pub(crate) normalize: bool,
+    pub(crate) random_state: Option<u64>,
 }
 
 impl Params {
     pub fn new() -> Self {
-        let mut nmfparams = NMFParams {
+        let nmfparams = NMFParams {
             ..Default::default()
         };
         let mut param = Self { param: nmfparams };
@@ -28,12 +29,16 @@ impl Params {
         param.n_components(3).batch_size(100);
         param
     }
-    pub fn n_components(&mut self, value: u64) -> &mut Self {
+    pub fn n_components(&mut self, value: usize) -> &mut Self {
         self.param.n_components = value;
         self
     }
     pub fn batch_size(&mut self, value: u64) -> &mut Self {
         self.param.batch_size = value;
+        self
+    }
+    pub fn epochs(&mut self, value: u64) -> &mut Self {
+        self.param.epochs = value;
         self
     }
     pub fn kappa(&mut self, value: f64) -> &mut Self {
@@ -68,7 +73,7 @@ impl Params {
         self.param.normalize = value;
         self
     }
-    pub fn random_state(&mut self, value: Option<i32>) -> &mut Self {
+    pub fn random_state(&mut self, value: Option<u64>) -> &mut Self {
         self.param.random_state = value;
         self
     }

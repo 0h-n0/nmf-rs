@@ -1,5 +1,5 @@
 pub trait Model {
-    fn fit(&self);
+    fn fit(&mut self) -> &mut Self;
     fn save(&self);
     fn load(&self);
 }
