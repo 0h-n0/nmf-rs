@@ -64,6 +64,7 @@ impl NMF {
         let WtW = Wt * self.mat_w.clone();
         for i in 0..self.params.param.h_max_iter {
             let Wtv = Wt * self.inputs;
+            
         }
     }
 
