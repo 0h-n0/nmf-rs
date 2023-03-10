@@ -4,7 +4,9 @@ use super::model::Model;
 use super::params::Params;
 use nalgebra::{Dyn, OMatrix};
 use nalgebra_sparse::csc::CscMatrix;
-use rand::{thread_rng, Rng};
+use rand::prelude::*;
+use rand::{thread_rng, Rng, SeedableRng};
+use rand_distr::{Standard, Distribution};
 
 type Mat2d = OMatrix<f64, Dyn, Dyn>;
 
@@ -24,6 +26,8 @@ impl NMFInputs {
         }
     }
 }
+
+
 
 #[derive(Debug)]
 pub struct NMF {
@@ -51,16 +55,25 @@ impl NMF {
         }
     }
     fn initialize_mat_w(nrows: usize, ncols: usize) -> Mat2d {
-        Mat2d::zeros(nrows, ncols)
+        let mut rng = thread_rng();
+        let data: Vec<f64> = Standard.sample_iter(&mut rng).take(nrows * ncols).collect();
+        Mat2d::from_vec(nrows, ncols, data)
     }
-    fn solve_proj(self, v: CscMatrix<f64>, W: Mat2d) {}
+    fn solve_proj(&self) {
+        let Wt = self.mat_w.transpose();
+        let WtW = Wt * self.mat_w.clone();
+        for i in 0..self.params.param.h_max_iter {
+            let Wtv = Wt * self.inputs;
+        }
+    }
+
     fn update(&mut self) {}
 }
 
 impl Model for NMF {
     fn fit(&mut self) -> &mut Self {
         for epoch in 0..self.params.param.epochs {
-            println!("{}", epoch);
+            self.solve_proj();
         }
         self
     }
@@ -82,5 +95,15 @@ mod tests {
         coo.push(2, 1, 1.0);
         let csc = CscMatrix::from(&coo);
         let input = NMFInputs::new(csc, n_tokens, n_documents);
+    }
+    #[test]
+    fn test_nmf_initialize_mat_w() {
+        let w = NMF::initialize_mat_w(50, 3);
+        assert_eq!(w.shape(), (50, 3));
+    }
+
+    #[test]
+    fn test_solveproj() {
+
     }
 }

@@ -2,6 +2,7 @@ use nalgebra_sparse::coo::CooMatrix;
 use nalgebra_sparse::csc::CscMatrix;
 
 use nmf_rs;
+use nmf_rs::models::model::Model;
 
 #[test]
 fn integrated_test() {
@@ -11,9 +12,10 @@ fn integrated_test() {
     let csc = CscMatrix::from(&coo);
     let mut params = nmf_rs::Params::new();
     let nmfinputs = nmf_rs::NMFInputs::new(csc, 3, 3);
-    let model = nmf_rs::NMF::new(params, nmfinputs);
+    let mut model = nmf_rs::NMF::new(params, nmfinputs);
+    model.fit();
     assert_eq!(1, 1);
 }
 
 #[test]
-fn parameter_access_from_non_internal_create() {}
+fn parameter_access_from_non_internal_crate() {}
