@@ -1,7 +1,7 @@
 pub mod models;
-pub use models::nmf::NMF;
-pub use models::nmf::NMFInputs;
-pub use models::params::Params;
+pub mod parameters;
+pub use models::onmfo::ONMFO;
+pub use parameters::onmfo::Params;
 
 #[cfg(test)]
 mod tests {

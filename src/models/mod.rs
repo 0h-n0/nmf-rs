@@ -1,5 +1,5 @@
 //! factorization machine models
 
 pub mod model;
-pub mod nmf;
-pub mod params;
+pub mod onmfo;
+pub mod plsa;

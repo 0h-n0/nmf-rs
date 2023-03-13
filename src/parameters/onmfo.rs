@@ -1,10 +1,10 @@
 #[derive(Debug)]
 pub struct Params {
-    pub(crate) param: NMFParams,
+    pub(crate) param: ONMFOParams,
 }
 
 #[derive(Default, Debug)]
-pub struct NMFParams {
+pub struct ONMFOParams {
     pub(crate) n_components: usize,
     pub(crate) batch_size: u64,
     pub(crate) epochs: u64,
@@ -21,7 +21,7 @@ pub struct NMFParams {
 
 impl Params {
     pub fn new() -> Self {
-        let nmfparams = NMFParams {
+        let nmfparams = ONMFOParams {
             ..Default::default()
         };
         let mut param = Self { param: nmfparams };
